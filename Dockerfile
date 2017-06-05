@@ -4,11 +4,9 @@ RUN apt-get update && apt-get --no-install-recommends -y install \
             ca-certificates \
             curl \
             net-tools \
+            nginx \
             sudo \
-            vim-tiny
-
-# Dependencies
-RUN apt-get update && apt-get --no-install-recommends -y install \
+            vim-tiny \
             build-essential \
             pkg-config \
             erlang \
@@ -61,9 +59,10 @@ RUN curl -o /usr/local/bin/cozy-stack -L https://github.com/cozy/cozy-stack/rele
     chown -R cozy: /etc/cozy
 
 COPY ./start.sh /
+COPY ./nginx-config /etc/cozy/
 
 RUN chmod +x /start.sh
 
-EXPOSE 8080 6060 5984
+EXPOSE 8080 6060 5984 1443
 
 ENTRYPOINT ["/start.sh"]
