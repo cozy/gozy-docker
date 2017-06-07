@@ -1,7 +1,7 @@
 server {
     listen %PORT%;
 
-    server_name %DOMAIN%;
+    server_name *.%DOMAIN%;
 
     ssl_certificate /etc/cozy/%DOMAIN%.crt;
     ssl_certificate_key /etc/cozy/%DOMAIN%.key;
