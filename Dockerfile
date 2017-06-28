@@ -40,7 +40,7 @@ RUN sudo -b -i -u couchdb sh -c '/home/couchdb/bin/couchdb >> /var/log/couchdb/c
     curl -X PUT http://127.0.0.1:5984/_global_changes
 
 # Cozy-stack
-RUN curl -o /usr/local/bin/cozy-stack -L https://github.com/cozy/cozy-stack/releases/download/2017M1-alpha/cozy-stack-linux-amd64-2017M1-alpha && \
+RUN curl -o /usr/local/bin/cozy-stack -L https://github.com/cozy/cozy-stack/releases/download/2017M2-alpha/cozy-stack-linux-amd64-2017M2-alpha && \
     chmod +x /usr/local/bin/cozy-stack && \
     adduser --system \
             --no-create-home \
