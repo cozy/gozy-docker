@@ -16,7 +16,7 @@ read -p "Instance domain : " -i "cozy.tools" -e instance_domain
 read -p "Server port : " -i 8080 -e server_port
 read -sp "Instance passphrase: " server_pass
 echo "Creating instance"
-cozy-stack instances add --host 0.0.0.0 --apps files,photos,settings,onboarding --passphrase "$server_pass" "${instance_domain}:${public_port}"
+cozy-stack instances add --host 0.0.0.0 --apps drive,photos,collect,settings,onboarding --passphrase "$server_pass" "${instance_domain}:${public_port}"
 echo "⋅ Creating certificate…"
 openssl req -x509 -nodes -newkey rsa:4096 -keyout "/etc/cozy/${instance_domain}.key" -out "/etc/cozy/${instance_domain}.crt" -days 365 -subj "/CN=\*.${instance_domain}"
 echo "⋅ Configuring NGinx…"
