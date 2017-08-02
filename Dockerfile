@@ -12,7 +12,8 @@ RUN apt-get update && apt-get --no-install-recommends -y install \
             erlang \
             libicu-dev \
             libmozjs185-dev \
-            libcurl4-openssl-dev
+            libcurl4-openssl-dev \
+            git
 
 # Install CouchDB
 RUN cd /tmp && \
@@ -58,10 +59,16 @@ RUN curl -o /usr/local/bin/cozy-stack -L https://github.com/cozy/cozy-stack/rele
     curl -o /etc/cozy/cozy.yaml https://raw.githubusercontent.com/cozy/cozy-stack/master/cozy.example.yaml && \
     chown -R cozy: /etc/cozy
 
+RUN sh -c 'echo "pass\npass\n" | /usr/local/bin/cozy-stack config passwd /etc/cozy/ > /dev/null'
+
 COPY ./start.sh /
-COPY ./nginx-config /etc/cozy/
+COPY ./installapps.sh /
+COPY ./cozy-stack /usr/local/bin/
 
 RUN chmod +x /start.sh
+RUN chmod +x /installapps.sh
+
+RUN ./installapps.sh
 
 EXPOSE 8080 6060 5984 1443
 
