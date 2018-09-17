@@ -1,4 +1,4 @@
-FROM debian:jessie
+FROM debian:stretch
 
 RUN apt-get update && apt-get --no-install-recommends -y install \
             ca-certificates \
@@ -16,9 +16,9 @@ RUN apt-get update && apt-get --no-install-recommends -y install \
 
 # Install CouchDB
 RUN cd /tmp && \
-    curl -LO https://dist.apache.org/repos/dist/release/couchdb/source/2.0.0/apache-couchdb-2.0.0.tar.gz && \
-    tar xf apache-couchdb-2.0.0.tar.gz && \
-    cd apache-couchdb-2.0.0 && \
+    curl -LO https://dist.apache.org/repos/dist/release/couchdb/source/2.2.0/apache-couchdb-2.2.0.tar.gz && \
+    tar xf apache-couchdb-2.2.0.tar.gz && \
+    cd apache-couchdb-2.2.0 && \
     ./configure && \
     make release && \
     adduser --system \
@@ -40,10 +40,9 @@ RUN sudo -b -i -u couchdb sh -c '/home/couchdb/bin/couchdb >> /var/log/couchdb/c
     curl -X PUT http://127.0.0.1:5984/_global_changes
 
 # Cozy-stack
-RUN curl -o /usr/local/bin/cozy-stack -L https://github.com/cozy/cozy-stack/releases/download/2017M2-alpha/cozy-stack-linux-amd64-2017M2-alpha && \
+RUN curl -o /usr/local/bin/cozy-stack -L https://github.com/cozy/cozy-stack/releases/download/2018M3S6/cozy-stack-linux-amd64 && \
     chmod +x /usr/local/bin/cozy-stack && \
     adduser --system \
-            --no-create-home \
             --shell /bin/bash \
             --group --gecos \
             "Cozy" cozy && \
@@ -56,6 +55,7 @@ RUN curl -o /usr/local/bin/cozy-stack -L https://github.com/cozy/cozy-stack/rele
     chown -R cozy: /var/lib/cozy && \
     mkdir /etc/cozy && \
     curl -o /etc/cozy/cozy.yaml https://raw.githubusercontent.com/cozy/cozy-stack/master/cozy.example.yaml && \
+    sed -i 's#/path/to/key#/etc/cozy/credentials-key#g' /etc/cozy/cozy.yaml && \
     chown -R cozy: /etc/cozy
 
 COPY ./start.sh /
