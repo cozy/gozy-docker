@@ -55,8 +55,9 @@ RUN curl -o /usr/local/bin/cozy-stack -L https://github.com/cozy/cozy-stack/rele
     chown -R cozy: /var/lib/cozy && \
     mkdir /etc/cozy && \
     curl -o /etc/cozy/cozy.yaml https://raw.githubusercontent.com/cozy/cozy-stack/master/cozy.example.yaml && \
-    sed -i 's#/path/to/key#/etc/cozy/credentials-key#g' /etc/cozy/cozy.yaml && \
-    chown -R cozy: /etc/cozy
+    sed -i 's#/path/to/key#/etc/cozy/credentials-key#g' /etc/cozy/cozy.yaml
+    
+RUN chown -R cozy: /etc/cozy
 
 COPY ./start.sh /
 COPY ./nginx-config /etc/cozy/
