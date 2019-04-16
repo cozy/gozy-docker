@@ -16,9 +16,9 @@ RUN apt-get update && apt-get --no-install-recommends -y install \
 
 # Install CouchDB
 RUN cd /tmp && \
-    curl -LO https://dist.apache.org/repos/dist/release/couchdb/source/2.2.0/apache-couchdb-2.2.0.tar.gz && \
-    tar xf apache-couchdb-2.2.0.tar.gz && \
-    cd apache-couchdb-2.2.0 && \
+    curl -LO https://dist.apache.org/repos/dist/release/couchdb/source/2.3.1/apache-couchdb-2.3.1.tar.gz && \
+    tar xf apache-couchdb-2.3.1.tar.gz && \
+    cd apache-couchdb-2.3.1 && \
     ./configure && \
     make release && \
     adduser --system \
